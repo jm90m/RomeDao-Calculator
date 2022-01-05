@@ -1,0 +1,16 @@
+export default {
+  sRomeAmount: "sRome Amount",
+  romeDaoRewardsCalculator: "RomeDAO Rewards Calculator",
+  apy: "APY (%)",
+  stakingRebaseReward: "Staking Rebase Reward",
+  romePurchasePrice: "ROME Purchase Price",
+  romeFuturePrice: "ROME Future Price",
+  days: "Days",
+  getCurrent: "Get Current",
+  estimatedResults: "Estimated Results",
+  initialInvestmentCost: "Investment Cost",
+  estimatedSRomeRewards: "Estimated sROME Rewards",
+  sROMERewardValue: "sROME Rewards Value",
+  totalSRome: "Total sROME",
+  totalInvestmentValue: "Total Investment Value",
+};
