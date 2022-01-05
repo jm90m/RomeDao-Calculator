@@ -8,6 +8,8 @@ import { formatToUSD, trim } from "../utils/utils";
 import i18n from "i18n-js";
 import CalculatorResults from "./CalculatorResults";
 import CalculatorFormField from "./CalculatorFormField";
+import CalculatorDailyBreakdown from "./CalculatorDailyBreakdown";
+import RomeMetrics from "./RomeMetrics";
 
 function Calculator() {
   const calculatorDispatch = useCalculatorDispatch();
@@ -48,77 +50,91 @@ function Calculator() {
   }, []);
 
   return (
-    <div className="pl-16 pr-16 mt-6">
-      <h3 className="mb-2">Estimate Rewards</h3>
-      <div className="calculator">
-        <CalculatorFormField
-          title={i18n.t("sRomeAmount")}
-          setField={setSRomeAmount}
-          value={sRomeAmount}
-        />
-        <CalculatorFormField
-          title={i18n.t("apy")}
-          includeCurrentButton
-          setField={setApy}
-          value={apy}
-          getCurrent={() => {
-            if (!loading) {
-              getMetrics(calculatorDispatch);
-            }
-            const trimmedStakingAPY = trim(stakingAPY * 100, 1);
-            setApy(trimmedStakingAPY);
-          }}
-        />
-        <CalculatorFormField
-          title={i18n.t("stakingRebaseReward")}
-          includeCurrentButton
-          setField={setStakingRebaseReward}
-          value={stakingRebaseReward}
-          getCurrent={() => {
-            if (!loading) {
-              getMetrics(calculatorDispatch);
-            }
-            setStakingRebaseReward(stakingRebasePercentage);
-          }}
-        />
-        <CalculatorFormField
-          title={i18n.t("romePurchasePrice")}
-          includeCurrentButton
-          setField={setRomePurchasePrice}
-          value={romePurchasePrice}
-          getCurrent={() => {
-            if (!loading) {
-              getMetrics(calculatorDispatch);
-            }
-            setRomePurchasePrice(marketPrice.toString());
-          }}
-        />
-        <CalculatorFormField
-          title={i18n.t("romeFuturePrice")}
-          includeCurrentButton
-          setField={setRomeFuturePrice}
-          value={romeFuturePrice}
-          getCurrent={() => {
-            if (!loading) {
-              getMetrics(calculatorDispatch);
-            }
-            setRomeFuturePrice(marketPrice.toString());
-          }}
-        />
-        <CalculatorFormField
-          title={i18n.t("days")}
-          setField={setDays}
-          value={days}
-        />
+    <>
+      <div>
+        <div className="flex ml-4 mr-4">
+          <div className="mt-6 w-1/2">
+            <h3 className="mb-2">Estimate Rewards</h3>
+            <div className="calculator">
+              <CalculatorFormField
+                title={i18n.t("sRomeAmount")}
+                setField={setSRomeAmount}
+                value={sRomeAmount}
+              />
+              <CalculatorFormField
+                title={i18n.t("apy")}
+                includeCurrentButton
+                setField={setApy}
+                value={apy}
+                getCurrent={() => {
+                  if (!loading) {
+                    getMetrics(calculatorDispatch);
+                  }
+                  const trimmedStakingAPY = trim(stakingAPY * 100, 1);
+                  setApy(trimmedStakingAPY);
+                }}
+              />
+              <CalculatorFormField
+                title={i18n.t("stakingRebaseReward")}
+                includeCurrentButton
+                setField={setStakingRebaseReward}
+                value={stakingRebaseReward}
+                getCurrent={() => {
+                  if (!loading) {
+                    getMetrics(calculatorDispatch);
+                  }
+                  setStakingRebaseReward(stakingRebasePercentage);
+                }}
+              />
+              <CalculatorFormField
+                title={i18n.t("romePurchasePrice")}
+                includeCurrentButton
+                setField={setRomePurchasePrice}
+                value={romePurchasePrice}
+                getCurrent={() => {
+                  if (!loading) {
+                    getMetrics(calculatorDispatch);
+                  }
+                  setRomePurchasePrice(marketPrice.toString());
+                }}
+              />
+              <CalculatorFormField
+                title={i18n.t("romeFuturePrice")}
+                includeCurrentButton
+                setField={setRomeFuturePrice}
+                value={romeFuturePrice}
+                getCurrent={() => {
+                  if (!loading) {
+                    getMetrics(calculatorDispatch);
+                  }
+                  setRomeFuturePrice(marketPrice.toString());
+                }}
+              />
+              <CalculatorFormField
+                title={i18n.t("days")}
+                setField={setDays}
+                value={days}
+              />
+            </div>
+            <CalculatorResults
+              initialInvestmentCost={formattedInitialInvestment}
+              estimatedTotalRomeRewarded={estimatedTotalRomeRewarded}
+              totalSRome={totalSRome}
+              sRomeRewardValue={formattedSRomeRewardValue}
+              totalInvestmentValue={formattedTotalInvestmentValue}
+            />
+          </div>
+          <RomeMetrics />
+        </div>
       </div>
-      <CalculatorResults
-        initialInvestmentCost={formattedInitialInvestment}
-        estimatedTotalRomeRewarded={estimatedTotalRomeRewarded}
-        totalSRome={totalSRome}
-        sRomeRewardValue={formattedSRomeRewardValue}
-        totalInvestmentValue={formattedTotalInvestmentValue}
+      <CalculatorDailyBreakdown
+        dailyRebaseAmounts={dailyRebaseAmounts}
+        days={days}
+        sRomeAmount={sRomeAmount}
+        stakingRebaseReward={stakingRebaseReward}
+        romeFuturePrice={romeFuturePrice}
       />
-    </div>
+    </>
   );
 }
 

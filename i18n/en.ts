@@ -13,4 +13,9 @@ export default {
   sROMERewardValue: "sROME Rewards Value",
   totalSRome: "Total sROME",
   totalInvestmentValue: "Total Investment Value",
+  dailyRewardsBreakdown: "Daily Rewards Breakdown",
+  day: "Day",
+  romeMetrics: "ROME Metrics",
+  increaseStakedSupplyBy: "Increase Staked Supply By",
+  totalStakedSupply: "Total Staked Supply"
 };

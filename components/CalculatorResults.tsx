@@ -41,13 +41,13 @@ function CalculatorResults({
             <p>{i18n.t("sROMERewardValue")}</p>
             <p className="text-right text-rose-600">{sRomeRewardValue}</p>
           </div>
-          <div className="items-center font-medium grid grid-cols-2 gap-2 sm:gap-16 text-dark-1000 tracking-2%">
+          <div className="items-center flex font-medium justify-between tracking-2%">
             <p>{i18n.t("totalSRome")}</p>
             <p className="text-right text-rose-600">
               {trim(totalSRome, 5)} sROME
             </p>
           </div>
-          <div className="items-center font-medium grid grid-cols-2 gap-2 sm:gap-16 text-dark-1000 tracking-2%">
+          <div className="items-center flex font-medium justify-between tracking-2%">
             <p>{i18n.t("totalInvestmentValue")}</p>
             <p className="text-right text-rose-600">{totalInvestmentValue}</p>
           </div>

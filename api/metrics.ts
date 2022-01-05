@@ -60,7 +60,8 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
   const stakingReward = epoch.distribute;
   const circ = await sRomeContract.circulatingSupply();
   const stakingRebase = stakingReward / circ;
-  const fiveDayRate = Math.pow(1 + stakingRebase, 5 * dailyRebaseAmounts) - 1;
+  const fiveDayRate =
+    (Math.pow(1 + stakingRebase, 5 * dailyRebaseAmounts) - 1);
   const stakingAPY = Math.pow(1 + stakingRebase, 365 * dailyRebaseAmounts) - 1;
 
   const currentIndex = await stakingContract.index();
