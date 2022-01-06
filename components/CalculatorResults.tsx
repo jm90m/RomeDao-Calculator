@@ -47,7 +47,7 @@ function CalculatorResults({
             <p className="text-right text-rose-600">
               {isNaN(estimatedTotalRomeRewarded)
                 ? 0
-                : trim(estimatedTotalRomeRewarded, 3)}{" "}
+                : formatNumber(trim(estimatedTotalRomeRewarded, 3))}{" "}
               sROME
             </p>
           </div>
@@ -58,7 +58,7 @@ function CalculatorResults({
           <div className="items-center flex font-medium justify-between tracking-2%">
             <p>{i18n.t("totalSRome")}</p>
             <p className="text-right text-rose-600">
-              {trim(totalSRome, 5)} sROME
+              {formatNumber(trim(totalSRome, 5))} sROME
             </p>
           </div>
           <div className="items-center flex font-medium justify-between tracking-2%">

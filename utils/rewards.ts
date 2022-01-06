@@ -2,7 +2,7 @@ import { SUPPLY_LIMITS } from "./constants";
 
 export function calculateDailyRewards(
   sRomeAmount: string,
-  days: string | number,
+  days: string,
   dailyRebaseAmounts,
   stakingRebaseReward: string,
   romeFuturePrice: string,
@@ -19,9 +19,8 @@ export function calculateDailyRewards(
   let didCalculateRegalDecrease = false;
   let regalDecreaseAPY = 0;
   let estimatedTotalStakedSupply = stakedSupply;
-  let dailyRebaseReward: number | string = parseFloat(
-    stakingRebaseReward / 100
-  );
+  let dailyRebaseReward: number | string =
+    parseFloat(stakingRebaseReward) / 100;
   let didCalculateRepublicanDecrease = false;
 
   for (let i = 0; i < parsedDays; i++) {
