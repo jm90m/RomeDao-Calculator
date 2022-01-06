@@ -61,7 +61,9 @@ function calculateDailyRewards(
 
     totalSRome += estimatedTotalRomeRewarded;
     totalStakedSupply += estimatedInflationRomeRewarded;
-    estimatedTotalSRomeRIP003 += estimatedTotalSRomeRewardedRIP003;
+    estimatedTotalSRomeRIP003 += isNaN(estimatedTotalSRomeRewardedRIP003)
+      ? 0
+      : estimatedTotalSRomeRewardedRIP003;
 
     if (!didCalculateRepublicanDecrease && !didCalculateRegalDecrease) {
       estimatedTotalStakedSupply += estimatedInflationRomeRewarded;
@@ -109,6 +111,8 @@ function calculateDailyRewards(
     const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);
     const estimatedTotalSRomeValueRIP003 =
       estimatedTotalSRomeRIP003 * parseFloat(romeFuturePrice);
+
+    console.log({ estimatedTotalSRomeRIP003 });
 
     rewardsBreakdown.push({
       day: i + 1,
