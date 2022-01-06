@@ -74,12 +74,12 @@ function calculateDailyRewards(
     if (
       totalStakedSupply >= SUPPLY_LIMITS.REGAL.MIN_SUPPLY &&
       totalStakedSupply <= SUPPLY_LIMITS.REGAL.MAX_SUPPLY &&
-      startingAPY <= SUPPLY_LIMITS.REGAL.MAX &&
       !didCalculateRegalDecrease
     ) {
       regalDecreaseAPY =
         (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
       didCalculateRegalDecrease = true;
+      console.log({ regalDecreaseAPY });
       startingAPY -= regalDecreaseAPY;
     }
 
