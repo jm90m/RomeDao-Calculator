@@ -3,21 +3,25 @@ import { prettifySeconds, secondsUntilBlock } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
 
 function RebaseTimer() {
-  const { nextRebase, currentBlockTime } = useCalculatorState();
+  const { nextRebase, currentBlock } = useCalculatorState();
 
   const [timeUntilRebase, setTimeUntilRebase] = useState("");
   useEffect(() => {
-    if (currentBlockTime && nextRebase) {
-      const seconds = secondsUntilBlock(currentBlockTime, nextRebase);
-      const time = prettifySeconds(seconds * -Math.pow(10, -6));
+    if (currentBlock && nextRebase) {
+      const seconds = secondsUntilBlock(currentBlock, nextRebase);
+      const time = prettifySeconds(seconds);
       setTimeUntilRebase(time);
-      console.log({ time: seconds * -Math.pow(10, -6) });
+      console.log({
+        currentBlock,
+        nextRebase: nextRebase * 1,
+        secs: seconds,
+      });
     }
-  }, [currentBlockTime, nextRebase]);
+  }, [currentBlock, nextRebase]);
   return (
     <div className="flex items-center justify-center mt-6">
       <span className="font-semibold text-rose-600">
-        {currentBlockTime ? (
+        {currentBlock ? (
           timeUntilRebase ? (
             <>
               <strong>{timeUntilRebase}</strong>{" "}

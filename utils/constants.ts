@@ -12,7 +12,6 @@ export const tokens: { [key: string]: string } = {
   STAKING_TOKEN_NAME: "sROME",
 };
 
-
 export const SUPPLY_LIMITS = {
   REGAL: {
     MAX: 1000,
