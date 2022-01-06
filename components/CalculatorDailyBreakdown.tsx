@@ -50,12 +50,14 @@ function calculateDailyRewards(
     Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
   let didCalculateRepublicanDecrease = false;
 
-  console.log({ stakingRebaseReward });
   for (let i = 0; i < parsedDays; i++) {
     if (didCalculateRegalDecrease || didCalculateRepublicanDecrease) {
       dailyRebaseReward =
         Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
-      startingAPY -= regalDecreaseAPY;
+
+      if (startingAPY > SUPPLY_LIMITS.IMPERIAL.MIN) {
+        startingAPY -= regalDecreaseAPY;
+      }
       // estimated RIP-003
       let estimatedRomeRewardedRIP003 =
         (Math.pow(
@@ -66,13 +68,6 @@ function calculateDailyRewards(
         Number(estimatedTotalStakedSupply);
 
       estimatedTotalStakedSupply += estimatedRomeRewardedRIP003;
-
-      console.log({
-        i,
-        estimatedRomeRewardedRIP003,
-        dailyRebaseReward,
-        stakingRebaseReward,
-      });
     }
 
     const estimatedTotalRomeRewarded =
@@ -102,15 +97,34 @@ function calculateDailyRewards(
     ) {
       regalDecreaseAPY =
         (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
+
       didCalculateRegalDecrease = true;
       startingAPY -= regalDecreaseAPY;
     } else if (
-      totalStakedSupply >= SUPPLY_LIMITS.REPUBLICAN.MIN_SUPPLY &&
-      totalStakedSupply <= SUPPLY_LIMITS.REPUBLICAN.MAX_SUPPLY &&
+      estimatedTotalStakedSupply >= SUPPLY_LIMITS.REPUBLICAN.MIN_SUPPLY &&
+      estimatedTotalStakedSupply <= SUPPLY_LIMITS.REPUBLICAN.MAX_SUPPLY &&
       !didCalculateRepublicanDecrease
     ) {
+      if (startingAPY > 10) {
+        startingAPY = 10;
+      }
+
       regalDecreaseAPY =
-        (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
+        (startingAPY - SUPPLY_LIMITS.REPUBLICAN.MIN) /
+        SUPPLY_LIMITS.REPUBLICAN.DURATION;
+      startingAPY -= regalDecreaseAPY;
+      didCalculateRepublicanDecrease = true;
+    } else if (
+      estimatedTotalStakedSupply >= SUPPLY_LIMITS.IMPERIAL.MIN_SUPPLY &&
+      estimatedTotalStakedSupply <= SUPPLY_LIMITS.IMPERIAL.MAX_SUPPLY
+    ) {
+      if (startingAPY > 1) {
+        startingAPY = 1;
+      }
+
+      regalDecreaseAPY =
+        (startingAPY - SUPPLY_LIMITS.REPUBLICAN.MIN) /
+        SUPPLY_LIMITS.REPUBLICAN.DURATION;
       startingAPY -= regalDecreaseAPY;
       didCalculateRepublicanDecrease = true;
     }
@@ -196,7 +210,7 @@ function CalculatorDailyBreakdown({
                   <td className="px-6 py-4">
                     {i18n.t("day")} {reward.day}
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedTotalRomeRewarded)
                       ? 0
                       : trim(reward.estimatedTotalRomeRewarded, 5)}
@@ -211,19 +225,19 @@ function CalculatorDailyBreakdown({
                   <td className="px-6 py-4 text-center text-rose-600">
                     {formatToUSD(reward.totalInvestmentValue)}
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedInflationRomeRewarded)
                       ? 0
                       : trim(reward.estimatedInflationRomeRewarded, 5)}{" "}
                     sROME
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.totalStakedSupply)
                       ? 0
                       : formatNumber(trim(reward.totalStakedSupply, 5))}{" "}
                     sROME
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedTotalStakedSupply)
                       ? 0
                       : formatNumber(
@@ -231,17 +245,17 @@ function CalculatorDailyBreakdown({
                         )}{" "}
                     sROME
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.startingAPY)
                       ? 0
                       : formatNumber(trim(reward.startingAPY * 100, 2))}
                     % (-
                     {isNaN(reward.regalDecreaseAPY)
                       ? 0
-                      : trim(reward.regalDecreaseAPY, 2)}
+                      : trim(reward.regalDecreaseAPY, 4)}
                     %)
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.dailyRebaseReward)
                       ? 0
                       : formatNumber(
@@ -249,7 +263,7 @@ function CalculatorDailyBreakdown({
                         )}{" "}
                     sROME
                   </td>
-                  <td className="text-center text-rose-600">
+                  <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedTotalSRomeRewardedRIP003)
                       ? 0
                       : formatNumber(

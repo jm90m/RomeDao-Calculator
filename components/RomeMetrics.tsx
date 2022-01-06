@@ -2,6 +2,7 @@ import React from "react";
 import i18n from "i18n-js";
 import { formatNumber, trim } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
+import RebaseTimer from "./RebaseTimer";
 
 function RomeMetrics({}) {
   const {
@@ -90,6 +91,7 @@ function RomeMetrics({}) {
             );
           })}
         </div>
+        <RebaseTimer />
       </div>
     </div>
   );
