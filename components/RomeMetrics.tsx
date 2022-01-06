@@ -1,9 +1,14 @@
 import React from "react";
 import i18n from "i18n-js";
 import { formatNumber, trim } from "../utils/utils";
-import { useCalculatorState } from "../context/calculatorContext";
+import {
+  useCalculatorDispatch,
+  useCalculatorState,
+} from "../context/calculatorContext";
 import RebaseTimer from "./RebaseTimer";
-import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { getMetrics } from "../api/metrics";
 
 function RomeMetrics({}) {
   const {
@@ -17,6 +22,7 @@ function RomeMetrics({}) {
     stakingTVL,
     stakingAPY,
   } = useCalculatorState();
+  const calculatorDispatch = useCalculatorDispatch();
   const otherMetricsTable: { label: string; value: string; unit: string }[] = [
     { label: "Current Index", value: trim(currentIndex, 4), unit: "ROME" },
     {
@@ -73,6 +79,17 @@ function RomeMetrics({}) {
   ];
   return (
     <div className="p-4 bg-gray-100 mt-6 ml-4 w-1/2 rome-metrics">
+      <div className="mt-6 mb-4 flex justify-end">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            getMetrics(calculatorDispatch);
+          }}
+        >
+          <FontAwesomeIcon icon={faSync} size="2x" />
+        </a>
+      </div>
       <div>
         <h2 className="font-medium tracking-2% text-dark-300">
           {i18n.t("romeMetrics")}
