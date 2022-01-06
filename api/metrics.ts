@@ -54,9 +54,7 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
   const marketCap = totalSupply * marketPrice;
 
   const epoch = await stakingContract.epoch();
-  const blockSecondLength = 13;
-  const rebaseTimeInSeconds = epoch[0] * blockSecondLength;
-  const dailyRebaseAmounts = 86400 / rebaseTimeInSeconds;
+  const dailyRebaseAmounts = 24 / 7.75;
   const stakingReward = epoch.distribute;
   const circ = await sRomeContract.circulatingSupply();
   const stakingRebase = stakingReward / circ;

@@ -50,7 +50,7 @@ function Calculator() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center calculator-component">
       <div>
         <div className="flex ml-4 mr-4 calc-mobile-container">
           <div className="mt-6 w-1/2">
