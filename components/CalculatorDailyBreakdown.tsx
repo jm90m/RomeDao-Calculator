@@ -50,17 +50,29 @@ function calculateDailyRewards(
     Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
   let didCalculateRepublicanDecrease = false;
 
+  console.log({ stakingRebaseReward });
   for (let i = 0; i < parsedDays; i++) {
     if (didCalculateRegalDecrease || didCalculateRepublicanDecrease) {
       dailyRebaseReward =
         Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
       startingAPY -= regalDecreaseAPY;
       // estimated RIP-003
-      const estimatedRomeRewardedRIP003 =
-        (Math.pow(1 + Number(dailyRebaseReward) / 100, 1 * dailyRebaseAmounts) -
+      let estimatedRomeRewardedRIP003 =
+        (Math.pow(
+          1 + Number(dailyRebaseReward * 100) / 100,
+          dailyRebaseAmounts
+        ) -
           1) *
-        Number(totalStakedSupply);
+        Number(estimatedTotalStakedSupply);
+
       estimatedTotalStakedSupply += estimatedRomeRewardedRIP003;
+
+      console.log({
+        i,
+        estimatedRomeRewardedRIP003,
+        dailyRebaseReward,
+        stakingRebaseReward,
+      });
     }
 
     const estimatedTotalRomeRewarded =
