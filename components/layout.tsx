@@ -24,6 +24,12 @@ export default function Layout({
           href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap"
           rel="stylesheet"
         />
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+        />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="HandheldFriendly" content="true" />
       </Head>
       <header className={styles.header}>
         {i18n.t("romeDaoRewardsCalculator")}
