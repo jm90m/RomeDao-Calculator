@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { prettifySeconds, secondsUntilBlock, toHHMMSS } from "../utils/utils";
+import { prettifySeconds, secondsUntilBlock } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
 
 function RebaseTimer() {
@@ -9,7 +9,7 @@ function RebaseTimer() {
   useEffect(() => {
     if (currentBlockTime && nextRebase) {
       const seconds = secondsUntilBlock(currentBlockTime, nextRebase);
-      const time = toHHMMSS(seconds * -Math.pow(10, -6));
+      const time = prettifySeconds(seconds * -Math.pow(10, -6));
       setTimeUntilRebase(time);
       // console.log({ time: seconds * -Math.pow(10, -6) });
     }
