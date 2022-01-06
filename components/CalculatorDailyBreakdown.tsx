@@ -45,10 +45,12 @@ function calculateDailyRewards(
   let startingAPY = stakingAPY;
   let didCalculateRegalDecrease = false;
   let regalDecreaseAPY = 0;
-  let dailyRebaseReward: number | string = Number(stakingRebaseReward) / 100;
+  let dailyRebaseReward: number | string =
+    Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
+  let didCalculateRepublicanDecrease = false;
 
   for (let i = 0; i < parsedDays; i++) {
-    if (didCalculateRegalDecrease) {
+    if (didCalculateRegalDecrease || didCalculateRepublicanDecrease) {
       dailyRebaseReward =
         Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
       startingAPY -= regalDecreaseAPY;
@@ -79,6 +81,14 @@ function calculateDailyRewards(
       regalDecreaseAPY =
         (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
       didCalculateRegalDecrease = true;
+      startingAPY -= regalDecreaseAPY;
+    } else if (
+      totalStakedSupply >= SUPPLY_LIMITS.REPUBLICAN.MIN_SUPPLY &&
+      totalStakedSupply <= SUPPLY_LIMITS.REPUBLICAN.MAX_SUPPLY &&
+      !didCalculateRepublicanDecrease
+    ) {
+      regalDecreaseAPY =
+        (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
       startingAPY -= regalDecreaseAPY;
     }
 
