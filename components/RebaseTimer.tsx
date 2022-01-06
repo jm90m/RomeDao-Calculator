@@ -11,7 +11,7 @@ function RebaseTimer() {
       const seconds = secondsUntilBlock(currentBlockTime, nextRebase);
       const time = toHHMMSS(seconds * -Math.pow(10, -6));
       setTimeUntilRebase(time);
-      console.log({ time: seconds * -Math.pow(10, -6) });
+      // console.log({ time: seconds * -Math.pow(10, -6) });
     }
   }, [currentBlockTime, nextRebase]);
   return (

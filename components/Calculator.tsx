@@ -92,7 +92,10 @@ function Calculator() {
                         Math.pow(parsedApy, 1 / (365 * dailyRebaseAmounts)) - 1;
                       if (!isNaN(rebaseReward)) {
                         setStakingRebaseReward(
-                          `${((rebaseReward * 100) / dailyRebaseAmounts) * 1.9}`
+                          `${
+                            ((rebaseReward * 100) / dailyRebaseAmounts) * 1.9 -
+                            0.0151
+                          }`
                         );
                       }
                     }
