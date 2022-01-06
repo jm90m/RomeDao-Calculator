@@ -10,15 +10,22 @@ import CalculatorResults from "./CalculatorResults";
 import CalculatorFormField from "./CalculatorFormField";
 import CalculatorDailyBreakdown from "./CalculatorDailyBreakdown";
 import RomeMetrics from "./RomeMetrics";
+import { calculateDailyRewards } from "../utils/rewards";
 
 function Calculator() {
   const calculatorDispatch = useCalculatorDispatch();
-  const { stakingAPY, stakingRebase, marketPrice, epoch, loading } =
-    useCalculatorState();
+  const {
+    stakingAPY,
+    stakingRebase,
+    marketPrice,
+    epoch,
+    loading,
+    stakedSupply,
+  } = useCalculatorState();
   const [sRomeAmount, setSRomeAmount] = useState<string>("");
   const [stakingRebaseReward, setStakingRebaseReward] = useState<string>("");
   const [romePurchasePrice, setRomePurchasePrice] = useState<string>("");
-  const [days, setDays] = useState<number>(30);
+  const [days, setDays] = useState<string>("30");
   const [romeFuturePrice, setRomeFuturePrice] = useState<string>("");
   const [apy, setApy] = useState<string>("");
   const stakingRebasePercentage = trim(stakingRebase * 100, 4);
@@ -32,7 +39,7 @@ function Calculator() {
   const estimatedTotalRomeRewarded =
     (Math.pow(
       1 + Number(stakingRebaseReward) / 100,
-      days * dailyRebaseAmounts
+      parseInt(days) * dailyRebaseAmounts
     ) -
       1) *
     Number(sRomeAmount);
@@ -44,6 +51,15 @@ function Calculator() {
   const formattedSRomeRewardValue = formatToUSD(sRomeRewardValue);
   const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);
   const formattedTotalInvestmentValue = formatToUSD(totalInvestmentValue);
+  const dailyRewards = calculateDailyRewards(
+    sRomeAmount,
+    days,
+    dailyRebaseAmounts,
+    stakingRebaseReward,
+    romeFuturePrice,
+    stakedSupply,
+    stakingAPY
+  );
 
   useEffect(() => {
     getMetrics(calculatorDispatch);
@@ -123,19 +139,14 @@ function Calculator() {
                 totalSRome={totalSRome}
                 sRomeRewardValue={formattedSRomeRewardValue}
                 totalInvestmentValue={formattedTotalInvestmentValue}
+                dailyRewards={dailyRewards}
               />
             </div>
             <RomeMetrics />
           </div>
         </div>
       </div>
-      <CalculatorDailyBreakdown
-        dailyRebaseAmounts={dailyRebaseAmounts}
-        days={days}
-        sRomeAmount={sRomeAmount}
-        stakingRebaseReward={stakingRebaseReward}
-        romeFuturePrice={romeFuturePrice}
-      />
+      <CalculatorDailyBreakdown dailyRewards={dailyRewards} />
     </>
   );
 }
