@@ -24,8 +24,8 @@ function RebaseTimer() {
         {currentBlock ? (
           timeUntilRebase ? (
             <>
-              <strong>{timeUntilRebase}</strong>{" "}
-              <p className="text-xs">to next rebase</p>
+              <strong className="text-xl">{timeUntilRebase}</strong>{" "}
+              <p className="text-base">to next rebase</p>
             </>
           ) : (
             <strong>Rebasing</strong>
