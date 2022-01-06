@@ -1,7 +1,31 @@
 import React from "react";
 import i18n from "i18n-js";
-import { formatToUSD, trim } from "../utils/utils";
+import { formatNumber, formatToUSD, trim } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
+
+const SUPPLY_LIMITS = {
+  REGAL: {
+    MAX: 1000,
+    MIN: 10,
+    DURATION: 6 * 31,
+    MAX_SUPPLY: 10000000,
+    MIN_SUPPLY: 500000,
+  },
+  REPUBLICAN: {
+    MAX: 10,
+    MIN: 1,
+    DURATION: 24 * 31,
+    MIN_SUPPLY: 10000001,
+    MAX_SUPPLY: 1000000000,
+  },
+  IMPERIAL: {
+    MAX: 1,
+    MIN: 0.03,
+    DURATION: 7 * 31,
+    MAX_SUPPLY: 100000000000,
+    MIN_SUPPLY: 1000000001,
+  },
+};
 
 function calculateDailyRewards(
   sRomeAmount: string,
@@ -9,15 +33,28 @@ function calculateDailyRewards(
   dailyRebaseAmounts,
   stakingRebaseReward: string,
   romeFuturePrice: string,
-  stakedSupply: number
+  stakedSupply: number,
+  stakingAPY: number
 ) {
   const parsedSRomeAmount = parseFloat(sRomeAmount);
   const parsedDays = parseInt(days);
   const rewardsBreakdown = [];
   let totalSRome = parsedSRomeAmount;
+  let estimatedTotalSRomeRIP003 = totalSRome;
   let totalStakedSupply = stakedSupply;
+  let startingAPY = stakingAPY;
+  let didCalculateRegalDecrease = false;
+  let regalDecreaseAPY = 0;
+  let dailyRebaseReward: number | string = stakingRebaseReward;
 
   for (let i = 0; i < parsedDays; i++) {
+    if (didCalculateRegalDecrease) {
+      startingAPY -= regalDecreaseAPY;
+      // estimated RIP-003
+      dailyRebaseReward =
+        Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
+    }
+
     const estimatedTotalRomeRewarded =
       (Math.pow(1 + Number(stakingRebaseReward) / 100, 1 * dailyRebaseAmounts) -
         1) *
@@ -26,9 +63,29 @@ function calculateDailyRewards(
       (Math.pow(1 + Number(stakingRebaseReward) / 100, 1 * dailyRebaseAmounts) -
         1) *
       Number(totalStakedSupply);
+    const estimatedTotalSRomeRewardedRIP003 =
+      (Math.pow(1 + Number(dailyRebaseReward) / 100, 1 * dailyRebaseAmounts) -
+        1) *
+      Number(estimatedTotalSRomeRIP003);
+
     totalSRome += estimatedTotalRomeRewarded;
     totalStakedSupply += estimatedInflationRomeRewarded;
+    estimatedTotalSRomeRIP003 += estimatedTotalSRomeRewardedRIP003;
+
+    if (
+      totalStakedSupply >= SUPPLY_LIMITS.REGAL.MIN_SUPPLY &&
+      totalStakedSupply <= SUPPLY_LIMITS.REGAL.MAX_SUPPLY &&
+      startingAPY <= SUPPLY_LIMITS.REGAL.MAX &&
+      !didCalculateRegalDecrease
+    ) {
+      regalDecreaseAPY =
+        (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
+      didCalculateRegalDecrease = true;
+      startingAPY -= regalDecreaseAPY;
+    }
+
     const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);
+
     rewardsBreakdown.push({
       day: i + 1,
       estimatedTotalRomeRewarded: estimatedTotalRomeRewarded,
@@ -36,6 +93,11 @@ function calculateDailyRewards(
       totalStakedSupply,
       totalSRome,
       totalInvestmentValue,
+      startingAPY,
+      regalDecreaseAPY,
+      dailyRebaseReward,
+      estimatedTotalSRomeRewardedRIP003,
+      estimatedTotalSRomeRIP003,
     });
   }
   return rewardsBreakdown;
@@ -48,14 +110,16 @@ function CalculatorDailyBreakdown({
   stakingRebaseReward,
   romeFuturePrice,
 }) {
-  const { stakedSupply } = useCalculatorState();
+  const { stakedSupply, stakingAPY, stakingRebase } = useCalculatorState();
   const dailyRewards = calculateDailyRewards(
     sRomeAmount,
     days,
     dailyRebaseAmounts,
     stakingRebaseReward,
     romeFuturePrice,
-    stakedSupply
+    stakedSupply,
+    stakingAPY,
+    stakingRebase
   );
   return (
     <div className="p-4 bg-gray-100 mt-6 ml-auto mr-auto">
@@ -72,6 +136,14 @@ function CalculatorDailyBreakdown({
               <th className="px-6 py-4">{i18n.t("totalInvestmentValue")}</th>
               <th className="px-6 py-4">{i18n.t("increaseStakedSupplyBy")}</th>
               <th className="px-6 py-4">{i18n.t("totalStakedSupply")}</th>
+              <th className="px-6 py-4">{i18n.t("estimatedAPY")}</th>
+              <th className="px-6 py-4">{i18n.t("estimatedStakingRebase")}</th>
+              <th className="px-6 py-4">
+                {i18n.t("estimatedSRomeRewardsWithRIP003")}
+              </th>
+              <th className="px-6 py-4">
+                {i18n.t("estimatedTotalSRomeRewardsWithRIP003")}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -87,7 +159,11 @@ function CalculatorDailyBreakdown({
                       : trim(reward.estimatedTotalRomeRewarded, 5)}
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
-                    {isNaN(reward.totalSRome) ? 0 : trim(reward.totalSRome, 5)}
+                    {isNaN(reward.totalSRome)
+                      ? 0
+                      : new Intl.NumberFormat("en-US").format(
+                          Number(trim(reward.totalSRome, 5))
+                        )}
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
                     {formatToUSD(reward.totalInvestmentValue)}
@@ -101,8 +177,38 @@ function CalculatorDailyBreakdown({
                   <td className="text-center text-rose-600">
                     {isNaN(reward.totalStakedSupply)
                       ? 0
-                      : trim(reward.totalStakedSupply, 5)}{" "}
+                      : formatNumber(trim(reward.totalStakedSupply, 5))}{" "}
                     sROME
+                  </td>
+                  <td className="text-center text-rose-600">
+                    {isNaN(reward.startingAPY)
+                      ? 0
+                      : formatNumber(trim(reward.startingAPY * 100, 2))}
+                    % (-
+                    {isNaN(reward.regalDecreaseAPY)
+                      ? 0
+                      : trim(reward.regalDecreaseAPY, 2)}
+                    %)
+                  </td>
+                  <td className="text-center text-rose-600">
+                    {isNaN(reward.dailyRebaseReward)
+                      ? 0
+                      : formatNumber(
+                          trim(reward.dailyRebaseReward * 100, 4)
+                        )}{" "}
+                    %
+                  </td>
+                  <td className="text-center text-rose-600">
+                    {isNaN(reward.estimatedTotalSRomeRewardedRIP003)
+                      ? 0
+                      : formatNumber(
+                          trim(reward.estimatedTotalSRomeRewardedRIP003, 5)
+                        )}
+                  </td>
+                  <td className="px-6 py-4 text-center text-rose-600">
+                    {isNaN(reward.estimatedTotalSRomeRIP003)
+                      ? 0
+                      : formatNumber(trim(reward.estimatedTotalSRomeRIP003, 5))}
                   </td>
                 </tr>
               );

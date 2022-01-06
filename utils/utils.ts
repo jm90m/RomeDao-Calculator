@@ -48,3 +48,7 @@ export const formatToUSD = (value: number) => {
         minimumFractionDigits: 0,
       }).format(0);
 };
+
+export const formatNumber = (value: string) => {
+  return new Intl.NumberFormat("en-US").format(Number(value));
+};

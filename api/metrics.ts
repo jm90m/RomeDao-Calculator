@@ -82,6 +82,7 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
       currentBlockTime,
       nextRebase,
       epoch,
+      dailyRebaseAmounts,
     },
   });
 }

@@ -29,3 +29,23 @@ img {
   max-width: 100%;
   display: block;
 }
+
+.calc-mobile-container {
+  max-width: 70%;
+  padding: 0 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .calc-mobile-container {
+    flex-direction: column;
+    width: 100%;
+    max-width: 768px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .calc-mobile-container > div {
+    max-width: 768px;
+    width: 100%;
+  }
+}

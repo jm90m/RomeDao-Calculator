@@ -52,7 +52,7 @@ function Calculator() {
   return (
     <>
       <div>
-        <div className="flex ml-4 mr-4">
+        <div className="flex ml-4 mr-4 calc-mobile-container">
           <div className="mt-6 w-1/2">
             <h3 className="mb-2">Estimate Rewards</h3>
             <div className="calculator">
