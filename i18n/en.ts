@@ -21,6 +21,7 @@ export default {
   estimatedAPY: "Estimated APY Decrease With RIP-003",
   estimatedStakingRebase: "Estimated Staking Rebase with RIP-003",
   estimatedSRomeRewardsWithRIP003: "Estimated sROME Rewards with RIP-003",
-  estimatedTotalSRomeRewardsWithRIP003:
-    "Estimated Total sROME Rewards with RIP-003",
+  estimatedTotalSRomeRewardsWithRIP003: "Estimated Total sROME with RIP-003",
+  estimatedTotalSRomeValueWithRIP003:
+    "Estimated Total sROME Value with RIP-003",
 };

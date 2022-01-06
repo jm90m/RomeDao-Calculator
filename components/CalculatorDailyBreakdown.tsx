@@ -85,6 +85,8 @@ function calculateDailyRewards(
     }
 
     const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);
+    const estimatedTotalSRomeValueRIP003 =
+      estimatedTotalSRomeRIP003 * parseFloat(romeFuturePrice);
 
     rewardsBreakdown.push({
       day: i + 1,
@@ -98,6 +100,7 @@ function calculateDailyRewards(
       dailyRebaseReward,
       estimatedTotalSRomeRewardedRIP003,
       estimatedTotalSRomeRIP003,
+      estimatedTotalSRomeValueRIP003,
     });
   }
   return rewardsBreakdown;
@@ -110,7 +113,7 @@ function CalculatorDailyBreakdown({
   stakingRebaseReward,
   romeFuturePrice,
 }) {
-  const { stakedSupply, stakingAPY, stakingRebase } = useCalculatorState();
+  const { stakedSupply, stakingAPY } = useCalculatorState();
   const dailyRewards = calculateDailyRewards(
     sRomeAmount,
     days,
@@ -118,8 +121,7 @@ function CalculatorDailyBreakdown({
     stakingRebaseReward,
     romeFuturePrice,
     stakedSupply,
-    stakingAPY,
-    stakingRebase
+    stakingAPY
   );
   return (
     <div className="p-4 bg-gray-100 mt-6 ml-auto mr-auto">
@@ -143,6 +145,9 @@ function CalculatorDailyBreakdown({
               </th>
               <th className="px-6 py-4">
                 {i18n.t("estimatedTotalSRomeRewardsWithRIP003")}
+              </th>
+              <th className="px-6 py-4">
+                {i18n.t("estimatedTotalSRomeValueWithRIP003")}
               </th>
             </tr>
           </thead>
@@ -203,12 +208,19 @@ function CalculatorDailyBreakdown({
                       ? 0
                       : formatNumber(
                           trim(reward.estimatedTotalSRomeRewardedRIP003, 5)
-                        )}
+                        )}{" "}
+                    sROME
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedTotalSRomeRIP003)
                       ? 0
-                      : formatNumber(trim(reward.estimatedTotalSRomeRIP003, 5))}
+                      : formatNumber(
+                          trim(reward.estimatedTotalSRomeRIP003, 5)
+                        )}{" "}
+                    sROME
+                  </td>
+                  <td className="px-6 py-4 text-center text-rose-600">
+                    {formatToUSD(reward.estimatedTotalSRomeValueRIP003)}
                   </td>
                 </tr>
               );
