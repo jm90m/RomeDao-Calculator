@@ -30,7 +30,7 @@ export const prettifySeconds = (seconds?: number, resolution?: string) => {
 };
 
 export const secondsUntilBlock = (startBlock: number, endBlock: number) => {
-  return (endBlock - startBlock) * 13;
+  return (endBlock - startBlock) * 7.75;
 };
 
 export const formatToUSD = (value: number) => {

@@ -11,13 +11,24 @@ function RebaseTimer() {
       const seconds = secondsUntilBlock(currentBlockTime, nextRebase);
       const time = prettifySeconds(seconds * -Math.pow(10, -6));
       setTimeUntilRebase(time);
-      // console.log({ time: seconds * -Math.pow(10, -6) });
+      console.log({ time: seconds * -Math.pow(10, -6) });
     }
   }, [currentBlockTime, nextRebase]);
   return (
     <div className="flex items-center justify-center mt-6">
       <span className="font-semibold text-rose-600">
-        {currentBlockTime ? <p /> : <p>LOADING</p>}
+        {currentBlockTime ? (
+          timeUntilRebase ? (
+            <>
+              <strong>{timeUntilRebase}</strong>{" "}
+              <p className="text-xs">to next rebase</p>
+            </>
+          ) : (
+            <strong>Rebasing</strong>
+          )
+        ) : (
+          <p>LOADING</p>
+        )}
       </span>
     </div>
   );
