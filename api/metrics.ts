@@ -2,7 +2,7 @@ import { ContextDispatch } from "../types/context";
 import { CALCULATOR_ACTIONS } from "../context/calculatorContext";
 import { ethers } from "ethers";
 import { romeAbi } from "../abis/rome.abi";
-import { sRomeAbi } from "../abis/sRome.abi";
+import { sRomeAbi } from "../abis/sRome2.abi";
 import { stakingAbi } from "../abis/staking.abi";
 import { addresses } from "../utils/constants";
 import { romeFraxPair } from "../abis/romeFraxPair.abi";
@@ -38,17 +38,18 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
   const currentBlockTime = (await provider.getBlock(currentBlock)).timestamp;
 
   const sRomeContract = new ethers.Contract(
-    addresses.sRome,
+    addresses.sRome2,
     sRomeAbi,
     provider
   );
+
   const romeContract = new ethers.Contract(addresses.rome, romeAbi, provider);
 
   const marketPrice = await getMarketPrice(provider);
 
   const totalSupply = (await romeContract.totalSupply()) / Math.pow(10, 9);
   const stakedSupply =
-    (await sRomeContract.contractBalance()) / Math.pow(10, 9);
+    (await stakingContract.contractBalance()) / Math.pow(10, 9);
 
   const stakingTVL = stakedSupply * marketPrice;
   const marketCap = totalSupply * marketPrice;
@@ -56,7 +57,7 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
   const epoch = await stakingContract.epoch();
   const dailyRebaseAmounts = 24 / 7.75;
   const stakingReward = epoch.distribute;
-  const circ = await sRomeContract.contractBalance();
+  const circ = await sRomeContract.circulatingSupply();
   const stakingRebase = stakingReward / circ;
   const fiveDayRate = Math.pow(1 + stakingRebase, 5 * dailyRebaseAmounts) - 1;
   const stakingAPY = Math.pow(1 + stakingRebase, 365 * dailyRebaseAmounts) - 1;
