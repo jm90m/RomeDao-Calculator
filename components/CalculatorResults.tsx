@@ -31,6 +31,7 @@ function CalculatorResults({
     lastDailyRewards !== undefined
       ? lastDailyRewards?.estimatedTotalSRomeRIP003
       : 0;
+
   return (
     <div className="p-4 bg-gray-100 mt-6">
       <div>

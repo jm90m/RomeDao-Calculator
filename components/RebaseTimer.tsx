@@ -17,18 +17,7 @@ function RebaseTimer() {
   return (
     <div className="flex items-center justify-center mt-6">
       <span className="font-semibold text-rose-600">
-        {currentBlockTime ? (
-          timeUntilRebase ? (
-            <>
-              <strong>{timeUntilRebase}</strong>{" "}
-              <p className="text-xs">to next rebase</p>
-            </>
-          ) : (
-            <strong>Rebasing</strong>
-          )
-        ) : (
-          <p>LOADING</p>
-        )}
+        {currentBlockTime ? <p></p> : <p>LOADING</p>}
       </span>
     </div>
   );
