@@ -49,10 +49,10 @@ function calculateDailyRewards(
 
   for (let i = 0; i < parsedDays; i++) {
     if (didCalculateRegalDecrease) {
-      startingAPY -= regalDecreaseAPY;
-      // estimated RIP-003
       dailyRebaseReward =
         Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
+      startingAPY -= regalDecreaseAPY;
+      // estimated RIP-003
     }
 
     const estimatedTotalRomeRewarded =
@@ -79,7 +79,6 @@ function calculateDailyRewards(
       regalDecreaseAPY =
         (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
       didCalculateRegalDecrease = true;
-      console.log({ regalDecreaseAPY });
       startingAPY -= regalDecreaseAPY;
     }
 
@@ -128,7 +127,7 @@ function CalculatorDailyBreakdown({
         <h2 className="font-medium tracking-2% text-dark-300">
           {i18n.t("dailyRewardsBreakdown")}
         </h2>
-        <table className="table-auto mt-6">
+        <table className="table-auto mt-6 bg-gray-100 ">
           <thead className="border-b bg-gray-100  sticky top-0">
             <tr>
               <th className="px-6 py-4">{i18n.t("day")}</th>
