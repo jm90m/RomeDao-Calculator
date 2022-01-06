@@ -65,7 +65,7 @@ function RomeMetrics({}) {
     },
   ];
   return (
-    <div className="p-4 bg-gray-100 mt-6 ml-4 w-1/2">
+    <div className="p-4 bg-gray-100 mt-6 ml-4 w-1/2 rome-metrics">
       <div>
         <h2 className="font-medium tracking-2% text-dark-300">
           {i18n.t("romeMetrics")}

@@ -31,8 +31,9 @@ img {
 }
 
 .calc-mobile-container {
-  max-width: 70%;
+  max-width: 100%;
   padding: 0 1rem;
+  align-self: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -42,6 +43,10 @@ img {
     max-width: 768px;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .rome-metrics {
+    margin-left: 0;
   }
 
   .calc-mobile-container > div {

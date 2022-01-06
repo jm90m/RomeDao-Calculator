@@ -50,7 +50,7 @@ function Calculator() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <div>
         <div className="flex ml-4 mr-4 calc-mobile-container">
           <div className="mt-6 w-1/2">
@@ -134,7 +134,7 @@ function Calculator() {
         stakingRebaseReward={stakingRebaseReward}
         romeFuturePrice={romeFuturePrice}
       />
-    </>
+    </div>
   );
 }
 
