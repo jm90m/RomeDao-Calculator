@@ -19,10 +19,11 @@ export default {
   increaseStakedSupplyBy: "Increase Staked Supply By",
   totalStakedSupply: "Total Staked Supply",
   estimatedAPY: "Estimated APY Decrease With RIP-003",
-  estimatedStakingRebase: "Estimated Staking Rebase with RIP-003",
+  estimatedStakingRebase: "Estimated Staking Rebase Reward with RIP-003",
   estimatedSRomeRewardsWithRIP003: "Estimated sROME Rewards with RIP-003",
   estimatedTotalSRomeRewardsWithRIP003: "Estimated Total sROME with RIP-003",
   estimatedTotalSRomeValueWithRIP003:
     "Estimated Total sROME Value with RIP-003",
   totalStakedSupplyWithRIP003: "Total Staked Supply with RIP-003",
+  estimatedTotalStakedSupplyWithRIP003: "Estimated Total Staked Supply with RIP-003"
 };
