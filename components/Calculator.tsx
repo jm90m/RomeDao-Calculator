@@ -83,7 +83,20 @@ function Calculator() {
                 <CalculatorFormField
                   title={i18n.t("apy")}
                   includeCurrentButton
-                  setField={setApy}
+                  setField={(apy: string) => {
+                    setApy(apy);
+                    const parsedApy = parseFloat(apy);
+                    if (!isNaN(parsedApy)) {
+                      const dailyRebaseAmounts = 24 / 7.75;
+                      const rebaseReward =
+                        Math.pow(parsedApy, 1 / (365 * dailyRebaseAmounts)) - 1;
+                      if (!isNaN(rebaseReward)) {
+                        setStakingRebaseReward(
+                          `${((rebaseReward * 100) / dailyRebaseAmounts) * 1.9}`
+                        );
+                      }
+                    }
+                  }}
                   value={apy}
                   getCurrent={() => {
                     if (!loading) {
@@ -91,6 +104,7 @@ function Calculator() {
                     }
                     const trimmedStakingAPY = trim(stakingAPY * 100, 1);
                     setApy(trimmedStakingAPY);
+                    setStakingRebaseReward(stakingRebasePercentage);
                     setKey(key + 1);
                   }}
                 />
