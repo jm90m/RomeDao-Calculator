@@ -26,7 +26,7 @@ export function calculateDailyRewards(
   for (let i = 0; i < parsedDays; i++) {
     if (didCalculateRegalDecrease || didCalculateRepublicanDecrease) {
       dailyRebaseReward =
-        Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1;
+        Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1 - 0.000151;
 
       if (startingAPY > SUPPLY_LIMITS.IMPERIAL.MIN) {
         startingAPY -= regalDecreaseAPY;
