@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "./layout.module.css";
 import React from "react";
 import i18n from "i18n-js";
+import Menu from "./Menu";
 
 export const siteTitle = "RomeDao Rewards Calculator";
 
@@ -34,6 +35,7 @@ export default function Layout({
       <header className={styles.header}>
         {i18n.t("romeDaoRewardsCalculator")}
       </header>
+      <Menu />
       <main>{children}</main>
     </div>
   );

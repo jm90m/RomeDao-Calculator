@@ -3,6 +3,7 @@ import i18n from "i18n-js";
 import { formatNumber, trim } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
 import RebaseTimer from "./RebaseTimer";
+import Link from "next/link";
 
 function RomeMetrics({}) {
   const {

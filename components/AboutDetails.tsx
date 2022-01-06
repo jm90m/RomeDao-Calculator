@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./layout.module.css";
+import Link from "next/link";
 
 function AboutDetails() {
   return (
@@ -36,10 +37,11 @@ function AboutDetails() {
             "SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION"}
         </code>
       </pre>
-      <p className="mt-6">
+      <p className="mt-6 mb-6">
         Note: that all of this is just an estimation, so your actual rewards can
         vary.
       </p>
+      <Link href="/">Go to calculator</Link>
     </div>
   );
 }
