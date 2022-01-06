@@ -60,3 +60,42 @@ img {
     width: 100%;
   }
 }
+
+pre {
+  color: #1f2933;
+  background-color: #f5f7fa;
+  margin-top: 24px;
+}
+
+pre code::before {
+  padding-left: unset;
+}
+
+pre code::after {
+  padding-right: unset;
+}
+
+code {
+  background-color: #f5f7fa;
+  color: #dd1144;
+  font-weight: 400;
+  border-radius: 0.25rem;
+  padding: 16px;
+  word-wrap: break-word;
+  display: block;
+  background: none;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+  max-width: 100%;
+  min-width: 100px;
+}
+
+code::before {
+  content: " ";
+  padding-left: 0.25rem;
+}
+code::after {
+  content: "";
+  padding-right: 0.25rem;
+}

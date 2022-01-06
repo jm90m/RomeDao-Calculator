@@ -11,3 +11,28 @@ export const tokens: { [key: string]: string } = {
   TOKEN_NAME: "ROME",
   STAKING_TOKEN_NAME: "sROME",
 };
+
+
+export const SUPPLY_LIMITS = {
+  REGAL: {
+    MAX: 1000,
+    MIN: 10,
+    DURATION: 6 * 31,
+    MAX_SUPPLY: 10000000,
+    MIN_SUPPLY: 500000,
+  },
+  REPUBLICAN: {
+    MAX: 10,
+    MIN: 1,
+    DURATION: 24 * 31,
+    MIN_SUPPLY: 10000001,
+    MAX_SUPPLY: 1000000000,
+  },
+  IMPERIAL: {
+    MAX: 1,
+    MIN: 0.03,
+    DURATION: 7 * 31,
+    MAX_SUPPLY: 100000000000,
+    MIN_SUPPLY: 1000000001,
+  },
+};
