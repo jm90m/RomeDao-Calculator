@@ -7,7 +7,7 @@ export function calculateDailyRewards(
   stakingRebaseReward: string,
   romeFuturePrice: string,
   stakedSupply: number,
-  stakingAPY: number
+  stakingAPY: string
 ) {
   const parsedSRomeAmount = parseFloat(sRomeAmount);
   const parsedDays = parseInt(days);
@@ -15,7 +15,7 @@ export function calculateDailyRewards(
   let totalSRome = parsedSRomeAmount;
   let estimatedTotalSRomeRIP003 = totalSRome;
   let totalStakedSupply = stakedSupply;
-  let startingAPY = stakingAPY;
+  let startingAPY = parseFloat(stakingAPY);
   let didCalculateRegalDecrease = false;
   let regalDecreaseAPY = 0;
   let estimatedTotalStakedSupply = stakedSupply;

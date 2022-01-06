@@ -28,6 +28,7 @@ function Calculator() {
   const [days, setDays] = useState<string>("30");
   const [romeFuturePrice, setRomeFuturePrice] = useState<string>("");
   const [apy, setApy] = useState<string>("");
+  const [key, setKey] = useState<number>(0);
   const stakingRebasePercentage = trim(stakingRebase * 100, 4);
   const parsedSRomeAmount = parseFloat(sRomeAmount);
   const initialInvestmentCost =
@@ -51,6 +52,7 @@ function Calculator() {
   const formattedSRomeRewardValue = formatToUSD(sRomeRewardValue);
   const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);
   const formattedTotalInvestmentValue = formatToUSD(totalInvestmentValue);
+  const calculatedAPY = parseFloat(apy) / 100;
   const dailyRewards = calculateDailyRewards(
     sRomeAmount,
     days,
@@ -58,7 +60,7 @@ function Calculator() {
     stakingRebaseReward,
     romeFuturePrice,
     stakedSupply,
-    stakingAPY
+    isNaN(calculatedAPY) ? `${stakingAPY}` : `${calculatedAPY}`
   );
 
   useEffect(() => {
@@ -89,6 +91,7 @@ function Calculator() {
                     }
                     const trimmedStakingAPY = trim(stakingAPY * 100, 1);
                     setApy(trimmedStakingAPY);
+                    setKey(key + 1);
                   }}
                 />
                 <CalculatorFormField
@@ -101,6 +104,7 @@ function Calculator() {
                       getMetrics(calculatorDispatch);
                     }
                     setStakingRebaseReward(stakingRebasePercentage);
+                    setKey(key + 1);
                   }}
                 />
                 <CalculatorFormField
@@ -113,6 +117,7 @@ function Calculator() {
                       getMetrics(calculatorDispatch);
                     }
                     setRomePurchasePrice(marketPrice.toString());
+                    setKey(key + 1);
                   }}
                 />
                 <CalculatorFormField
@@ -140,13 +145,14 @@ function Calculator() {
                 sRomeRewardValue={formattedSRomeRewardValue}
                 totalInvestmentValue={formattedTotalInvestmentValue}
                 dailyRewards={dailyRewards}
+                key={key}
               />
             </div>
             <RomeMetrics />
           </div>
         </div>
       </div>
-      <CalculatorDailyBreakdown dailyRewards={dailyRewards} />
+      <CalculatorDailyBreakdown dailyRewards={dailyRewards} key={key} />
     </>
   );
 }
