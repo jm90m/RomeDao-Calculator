@@ -1,6 +1,6 @@
 import React from "react";
 import i18n from "i18n-js";
-import { trim } from "../utils/utils";
+import { formatNumber, trim } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
 
 function RomeMetrics({}) {
@@ -13,6 +13,7 @@ function RomeMetrics({}) {
     fiveDayRate,
     stakingRebase,
     stakingTVL,
+    stakingAPY,
   } = useCalculatorState();
   const otherMetricsTable: { label: string; value: string; unit: string }[] = [
     { label: "Current Index", value: trim(currentIndex, 4), unit: "ROME" },
@@ -50,9 +51,13 @@ function RomeMetrics({}) {
       ),
       unit: "ROME",
     },
-    ,
     { label: "5-day Rate", value: trim(fiveDayRate * 100, 4), unit: "%" },
     { label: "Staking Rebase", value: trim(stakingRebase * 100, 4), unit: "%" },
+    {
+      label: "Staking APY",
+      value: formatNumber(trim(stakingAPY * 100, 2)),
+      unit: "%",
+    },
     {
       label: "Staking TVL",
       value: new Intl.NumberFormat("en-US", {

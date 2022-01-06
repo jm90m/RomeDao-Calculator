@@ -50,81 +50,83 @@ function Calculator() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center calculator-component">
-      <div>
-        <div className="flex ml-4 mr-4 calc-mobile-container">
-          <div className="mt-6 w-1/2">
-            <h3 className="mb-2">Estimate Rewards</h3>
-            <div className="calculator">
-              <CalculatorFormField
-                title={i18n.t("sRomeAmount")}
-                setField={setSRomeAmount}
-                value={sRomeAmount}
-              />
-              <CalculatorFormField
-                title={i18n.t("apy")}
-                includeCurrentButton
-                setField={setApy}
-                value={apy}
-                getCurrent={() => {
-                  if (!loading) {
-                    getMetrics(calculatorDispatch);
-                  }
-                  const trimmedStakingAPY = trim(stakingAPY * 100, 1);
-                  setApy(trimmedStakingAPY);
-                }}
-              />
-              <CalculatorFormField
-                title={i18n.t("stakingRebaseReward")}
-                includeCurrentButton
-                setField={setStakingRebaseReward}
-                value={stakingRebaseReward}
-                getCurrent={() => {
-                  if (!loading) {
-                    getMetrics(calculatorDispatch);
-                  }
-                  setStakingRebaseReward(stakingRebasePercentage);
-                }}
-              />
-              <CalculatorFormField
-                title={i18n.t("romePurchasePrice")}
-                includeCurrentButton
-                setField={setRomePurchasePrice}
-                value={romePurchasePrice}
-                getCurrent={() => {
-                  if (!loading) {
-                    getMetrics(calculatorDispatch);
-                  }
-                  setRomePurchasePrice(marketPrice.toString());
-                }}
-              />
-              <CalculatorFormField
-                title={i18n.t("romeFuturePrice")}
-                includeCurrentButton
-                setField={setRomeFuturePrice}
-                value={romeFuturePrice}
-                getCurrent={() => {
-                  if (!loading) {
-                    getMetrics(calculatorDispatch);
-                  }
-                  setRomeFuturePrice(marketPrice.toString());
-                }}
-              />
-              <CalculatorFormField
-                title={i18n.t("days")}
-                setField={setDays}
-                value={days}
+    <>
+      <div className="flex flex-col items-center">
+        <div>
+          <div className="flex ml-4 mr-4 calc-mobile-container">
+            <div className="mt-6 w-1/2">
+              <h3 className="mb-2">Estimate Rewards</h3>
+              <div className="calculator">
+                <CalculatorFormField
+                  title={i18n.t("sRomeAmount")}
+                  setField={setSRomeAmount}
+                  value={sRomeAmount}
+                />
+                <CalculatorFormField
+                  title={i18n.t("apy")}
+                  includeCurrentButton
+                  setField={setApy}
+                  value={apy}
+                  getCurrent={() => {
+                    if (!loading) {
+                      getMetrics(calculatorDispatch);
+                    }
+                    const trimmedStakingAPY = trim(stakingAPY * 100, 1);
+                    setApy(trimmedStakingAPY);
+                  }}
+                />
+                <CalculatorFormField
+                  title={i18n.t("stakingRebaseReward")}
+                  includeCurrentButton
+                  setField={setStakingRebaseReward}
+                  value={stakingRebaseReward}
+                  getCurrent={() => {
+                    if (!loading) {
+                      getMetrics(calculatorDispatch);
+                    }
+                    setStakingRebaseReward(stakingRebasePercentage);
+                  }}
+                />
+                <CalculatorFormField
+                  title={i18n.t("romePurchasePrice")}
+                  includeCurrentButton
+                  setField={setRomePurchasePrice}
+                  value={romePurchasePrice}
+                  getCurrent={() => {
+                    if (!loading) {
+                      getMetrics(calculatorDispatch);
+                    }
+                    setRomePurchasePrice(marketPrice.toString());
+                  }}
+                />
+                <CalculatorFormField
+                  title={i18n.t("romeFuturePrice")}
+                  includeCurrentButton
+                  setField={setRomeFuturePrice}
+                  value={romeFuturePrice}
+                  getCurrent={() => {
+                    if (!loading) {
+                      getMetrics(calculatorDispatch);
+                    }
+                    setRomeFuturePrice(marketPrice.toString());
+                  }}
+                />
+                <CalculatorFormField
+                  title={i18n.t("days")}
+                  setField={setDays}
+                  value={days}
+                />
+              </div>
+              <CalculatorResults
+                initialInvestmentCost={formattedInitialInvestment}
+                estimatedTotalRomeRewarded={estimatedTotalRomeRewarded}
+                totalSRome={totalSRome}
+                sRomeRewardValue={formattedSRomeRewardValue}
+                totalInvestmentValue={formattedTotalInvestmentValue}
               />
             </div>
-            <CalculatorResults
-              initialInvestmentCost={formattedInitialInvestment}
-              estimatedTotalRomeRewarded={estimatedTotalRomeRewarded}
-              totalSRome={totalSRome}
-              sRomeRewardValue={formattedSRomeRewardValue}
-              totalInvestmentValue={formattedTotalInvestmentValue}
-            />
+            <RomeMetrics />
           </div>
-          <RomeMetrics />
         </div>
       </div>
       <CalculatorDailyBreakdown
@@ -134,7 +136,7 @@ function Calculator() {
         stakingRebaseReward={stakingRebaseReward}
         romeFuturePrice={romeFuturePrice}
       />
-    </div>
+    </>
   );
 }
 

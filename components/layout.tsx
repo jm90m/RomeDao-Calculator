@@ -12,7 +12,7 @@ export default function Layout({
   home?: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center">
+    <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="RomeDAO Rewards Calculator" />

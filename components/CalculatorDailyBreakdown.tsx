@@ -45,7 +45,7 @@ function calculateDailyRewards(
   let startingAPY = stakingAPY;
   let didCalculateRegalDecrease = false;
   let regalDecreaseAPY = 0;
-  let dailyRebaseReward: number | string = stakingRebaseReward;
+  let dailyRebaseReward: number | string = Number(stakingRebaseReward) / 100;
 
   for (let i = 0; i < parsedDays; i++) {
     if (didCalculateRegalDecrease) {
@@ -64,8 +64,7 @@ function calculateDailyRewards(
         1) *
       Number(totalStakedSupply);
     const estimatedTotalSRomeRewardedRIP003 =
-      (Math.pow(1 + Number(dailyRebaseReward) / 100, 1 * dailyRebaseAmounts) -
-        1) *
+      (Math.pow(1 + Number(dailyRebaseReward), 1 * dailyRebaseAmounts) - 1) *
       Number(estimatedTotalSRomeRIP003);
 
     totalSRome += estimatedTotalRomeRewarded;

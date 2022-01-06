@@ -36,6 +36,12 @@ img {
   align-self: center;
 }
 
+@media screen and (min-width: 768px) {
+  .calculator-component {
+    align-items: center;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .calc-mobile-container {
     flex-direction: column;

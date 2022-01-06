@@ -48,7 +48,7 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
 
   const totalSupply = (await romeContract.totalSupply()) / Math.pow(10, 9);
   const stakedSupply =
-    (await sRomeContract.circulatingSupply()) / Math.pow(10, 9);
+    (await sRomeContract.contractBalance()) / Math.pow(10, 9);
 
   const stakingTVL = stakedSupply * marketPrice;
   const marketCap = totalSupply * marketPrice;
@@ -56,8 +56,9 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
   const epoch = await stakingContract.epoch();
   const dailyRebaseAmounts = 24 / 7.75;
   const stakingReward = epoch.distribute;
-  const circ = await sRomeContract.circulatingSupply();
+  const circ = await sRomeContract.contractBalance();
   const stakingRebase = stakingReward / circ;
+  console.log({ stakingRebase });
   const fiveDayRate = Math.pow(1 + stakingRebase, 5 * dailyRebaseAmounts) - 1;
   const stakingAPY = Math.pow(1 + stakingRebase, 365 * dailyRebaseAmounts) - 1;
 

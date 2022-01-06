@@ -24,4 +24,5 @@ export default {
   estimatedTotalSRomeRewardsWithRIP003: "Estimated Total sROME with RIP-003",
   estimatedTotalSRomeValueWithRIP003:
     "Estimated Total sROME Value with RIP-003",
+  totalStakedSupplyWithRIP003: "Total Staked Supply with RIP-003",
 };
