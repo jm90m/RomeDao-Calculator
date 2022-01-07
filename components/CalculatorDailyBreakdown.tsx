@@ -56,7 +56,9 @@ function CalculatorDailyBreakdown({
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedTotalRomeRewarded)
                       ? 0
-                      : trim(reward.estimatedTotalRomeRewarded, 5)}
+                      : formatNumber(
+                          trim(reward.estimatedTotalRomeRewarded, 5)
+                        )}
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.totalSRome)
@@ -71,7 +73,9 @@ function CalculatorDailyBreakdown({
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedInflationRomeRewarded)
                       ? 0
-                      : trim(reward.estimatedInflationRomeRewarded, 5)}{" "}
+                      : formatNumber(
+                          trim(reward.estimatedInflationRomeRewarded, 5)
+                        )}{" "}
                     sROME
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
