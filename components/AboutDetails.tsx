@@ -33,10 +33,15 @@ function AboutDetails() {
             "    MIN_SUPPLY: 1000000001,\n" +
             "  }," +
             "}"}
-          {"\n\nconst regalDecreaseAPY = (startingAPY -\n" +
-            "SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION"}
+          {`\ncalculatedAPY = SUPPLY_LIMITS.REGAL.MAX -
+            (estimatedTotalStakedSupply / SUPPLY_LIMITS.REGAL.MAX_SUPPLY) *
+            (SUPPLY_LIMITS.REGAL.MAX - SUPPLY_LIMITS.REGAL.MIN)`}
         </code>
       </pre>
+      <p className="mt-6">
+        So in short the APY is equal to APY Era Max - [(staked total/staked
+        supply MAX for that era) * difference between ERA APY MAX and MIN]
+      </p>
       <p className="mt-6 mb-6">
         Note: that all of this is just an estimation, so your actual rewards can
         vary.
