@@ -2,6 +2,7 @@ import React from "react";
 import i18n from "i18n-js";
 import { formatNumber, formatToUSD, trim } from "../utils/utils";
 import { useCalculatorState } from "../context/calculatorContext";
+import moment from "moment-timezone";
 
 interface CalculatorDailyBreakdownProps {
   dailyRewards: any[];
@@ -11,7 +12,6 @@ function CalculatorDailyBreakdown({
   dailyRewards,
 }: CalculatorDailyBreakdownProps) {
   const { stakingAPY } = useCalculatorState();
-
   return (
     <div className="p-4 bg-gray-100 mt-6 ml-auto mr-auto">
       <div>
@@ -47,11 +47,16 @@ function CalculatorDailyBreakdown({
             </tr>
           </thead>
           <tbody>
-            {dailyRewards.map((reward) => {
+            {dailyRewards.map((reward, i) => {
+              const date = moment().add(i + 1, "days");
+
               return (
                 <tr key={reward.day} className="border-b">
                   <td className="px-6 py-4">
-                    {i18n.t("day")} {reward.day}
+                    {i18n.t("day")} {reward.day} -
+                    <p className="whitespace-nowrap">
+                      {date.format("MMM DD, YYYY")}
+                    </p>
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedTotalRomeRewarded)
