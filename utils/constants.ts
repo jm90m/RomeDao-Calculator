@@ -35,3 +35,9 @@ export const SUPPLY_LIMITS = {
     MIN_SUPPLY: 1000000001,
   },
 };
+
+export const ERAS = {
+  REPUBLICAN: "republican",
+  REGAL: "regal",
+  IMPERIAL: "imperial",
+};

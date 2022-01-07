@@ -1,4 +1,4 @@
-import { SUPPLY_LIMITS } from "./constants";
+import { SUPPLY_LIMITS, ERAS } from "./constants";
 
 export function calculateDailyRewards(
   sRomeAmount: string,
@@ -22,16 +22,34 @@ export function calculateDailyRewards(
   let dailyRebaseReward: number | string =
     parseFloat(stakingRebaseReward) / 100;
   let didCalculateRepublicanDecrease = false;
+  let currentEra;
+  let prevEstimatedAPY = startingAPY;
 
   for (let i = 0; i < parsedDays; i++) {
-    if (didCalculateRegalDecrease || didCalculateRepublicanDecrease) {
+    if (currentEra !== undefined) {
       dailyRebaseReward =
         Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1 - 0.000151;
 
-      if (startingAPY > SUPPLY_LIMITS.IMPERIAL.MIN) {
-        startingAPY -= regalDecreaseAPY;
+      if (currentEra === ERAS.REPUBLICAN) {
+        startingAPY =
+          SUPPLY_LIMITS.REPUBLICAN.MAX -
+          (estimatedTotalStakedSupply / SUPPLY_LIMITS.REPUBLICAN.MAX_SUPPLY) *
+            (SUPPLY_LIMITS.REPUBLICAN.MAX - SUPPLY_LIMITS.REPUBLICAN.MIN);
+      } else if (currentEra === ERAS.REGAL) {
+        startingAPY =
+          SUPPLY_LIMITS.REGAL.MAX -
+          (estimatedTotalStakedSupply / SUPPLY_LIMITS.REGAL.MAX_SUPPLY) *
+            (SUPPLY_LIMITS.REGAL.MAX - SUPPLY_LIMITS.REGAL.MIN);
+      } else if (currentEra === ERAS.IMPERIAL) {
+        startingAPY =
+          SUPPLY_LIMITS.IMPERIAL.MAX -
+          (estimatedTotalStakedSupply / SUPPLY_LIMITS.IMPERIAL.MAX_SUPPLY) *
+            (SUPPLY_LIMITS.IMPERIAL.MAX - SUPPLY_LIMITS.IMPERIAL.MIN);
       }
-      // estimated RIP-003
+
+      regalDecreaseAPY = prevEstimatedAPY - startingAPY;
+      prevEstimatedAPY = startingAPY;
+
       let estimatedRomeRewardedRIP003 =
         (Math.pow(
           1 + Number(dailyRebaseReward * 100) / 100,
@@ -68,40 +86,22 @@ export function calculateDailyRewards(
     if (
       totalStakedSupply >= SUPPLY_LIMITS.REGAL.MIN_SUPPLY &&
       totalStakedSupply <= SUPPLY_LIMITS.REGAL.MAX_SUPPLY &&
-      !didCalculateRegalDecrease
+      currentEra === undefined
     ) {
-      regalDecreaseAPY =
-        (startingAPY - SUPPLY_LIMITS.REGAL.MIN) / SUPPLY_LIMITS.REGAL.DURATION;
-
       didCalculateRegalDecrease = true;
-      startingAPY -= regalDecreaseAPY;
+      currentEra = ERAS.REGAL;
     } else if (
       estimatedTotalStakedSupply >= SUPPLY_LIMITS.REPUBLICAN.MIN_SUPPLY &&
       estimatedTotalStakedSupply <= SUPPLY_LIMITS.REPUBLICAN.MAX_SUPPLY &&
-      !didCalculateRepublicanDecrease
+      currentEra === ERAS.REGAL
     ) {
-      if (startingAPY > 10) {
-        startingAPY = 10;
-      }
-
-      regalDecreaseAPY =
-        (startingAPY - SUPPLY_LIMITS.REPUBLICAN.MIN) /
-        SUPPLY_LIMITS.REPUBLICAN.DURATION;
-      startingAPY -= regalDecreaseAPY;
-      didCalculateRepublicanDecrease = true;
+      currentEra = ERAS.REPUBLICAN;
     } else if (
       estimatedTotalStakedSupply >= SUPPLY_LIMITS.IMPERIAL.MIN_SUPPLY &&
-      estimatedTotalStakedSupply <= SUPPLY_LIMITS.IMPERIAL.MAX_SUPPLY
+      estimatedTotalStakedSupply <= SUPPLY_LIMITS.IMPERIAL.MAX_SUPPLY &&
+      currentEra === ERAS.REPUBLICAN
     ) {
-      if (startingAPY > 1) {
-        startingAPY = 1;
-      }
-
-      regalDecreaseAPY =
-        (startingAPY - SUPPLY_LIMITS.REPUBLICAN.MIN) /
-        SUPPLY_LIMITS.REPUBLICAN.DURATION;
-      startingAPY -= regalDecreaseAPY;
-      didCalculateRepublicanDecrease = true;
+      currentEra = ERAS.IMPERIAL;
     }
 
     const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);

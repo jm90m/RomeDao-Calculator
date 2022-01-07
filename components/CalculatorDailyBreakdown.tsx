@@ -95,7 +95,7 @@ function CalculatorDailyBreakdown({
                     % (-
                     {isNaN(reward.regalDecreaseAPY)
                       ? 0
-                      : trim(reward.regalDecreaseAPY, 4)}
+                      : trim(Math.abs(reward.regalDecreaseAPY), 4)}
                     %)
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
