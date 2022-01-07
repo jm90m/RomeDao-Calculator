@@ -11,11 +11,6 @@ function RebaseTimer() {
       const seconds = secondsUntilBlock(currentBlock, nextRebase);
       const time = prettifySeconds(seconds);
       setTimeUntilRebase(time);
-      console.log({
-        currentBlock,
-        nextRebase: nextRebase * 1,
-        secs: seconds,
-      });
     }
   }, [currentBlock, nextRebase]);
   return (
