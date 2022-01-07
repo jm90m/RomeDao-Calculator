@@ -79,7 +79,7 @@ function RomeMetrics({}) {
   ];
   return (
     <div className="p-4 bg-gray-100 mt-6 ml-4 w-1/2 rome-metrics">
-      <div className="mt-6 mb-4 flex justify-end">
+      <div className="mb-4 flex justify-end">
         <a
           href="#"
           onClick={(e) => {
