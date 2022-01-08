@@ -6,6 +6,7 @@ import { sRomeAbi } from "../abis/sRome2.abi";
 import { stakingAbi } from "../abis/staking.abi";
 import { addresses } from "../utils/constants";
 import { romeFraxPair } from "../abis/romeFraxPair.abi";
+import genericAbi from "../abis/generic.abi";
 
 export async function getMarketPrice(
   provider: ethers.Signer | ethers.providers.Provider

@@ -25,5 +25,11 @@ export default {
   estimatedTotalSRomeValueWithRIP003:
     "Estimated Total sROME Value with RIP-003",
   totalStakedSupplyWithRIP003: "Total Staked Supply with RIP-003",
-  estimatedTotalStakedSupplyWithRIP003: "Estimated Total Staked Supply with RIP-003"
+  estimatedTotalStakedSupplyWithRIP003:
+    "Estimated Total Staked Supply with RIP-003",
+  romeMarketCap: "Rome Market Cap",
+  estimatedTotalSupply: "Estimated Total Supply",
+  estimatedMarketCap: "Estimated Market Cap",
+  estimatedTotalSupplyWithRIP003: "Estimated Total Supply with RIP-003",
+  estimatedMarketCapWithRIP003: "Estimated Market Cap with RIP-003",
 };

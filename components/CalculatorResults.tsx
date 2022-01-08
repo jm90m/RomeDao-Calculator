@@ -1,6 +1,7 @@
 import React from "react";
 import i18n from "i18n-js";
 import { formatNumber, formatToUSD, trim } from "../utils/utils";
+import { useCalculatorState } from "../context/calculatorContext";
 
 interface CalculatorResultsProps {
   initialInvestmentCost: string;
@@ -19,18 +20,30 @@ function CalculatorResults({
   totalInvestmentValue,
   dailyRewards = [],
 }: CalculatorResultsProps) {
+  const { marketPrice } = useCalculatorState();
   const lastDailyRewards =
     dailyRewards?.length > 0
       ? dailyRewards[dailyRewards.length - 1]
       : undefined;
-  const estimatedTotalSRomeValueRIP003 =
-    lastDailyRewards !== undefined
-      ? lastDailyRewards?.estimatedTotalSRomeValueRIP003
-      : 0;
-  const estimatedTotalSRomeRIP003 =
-    lastDailyRewards !== undefined
-      ? lastDailyRewards?.estimatedTotalSRomeRIP003
-      : 0;
+  const hasLastDailyRewards = lastDailyRewards !== undefined;
+  const estimatedTotalSRomeValueRIP003 = hasLastDailyRewards
+    ? lastDailyRewards?.estimatedTotalSRomeValueRIP003
+    : 0;
+  const estimatedTotalSRomeRIP003 = hasLastDailyRewards
+    ? lastDailyRewards?.estimatedTotalSRomeRIP003
+    : 0;
+  const estimatedTotalSupply = hasLastDailyRewards
+    ? lastDailyRewards?.totalStakedSupply
+    : 0;
+  const estimatedMarketCap = hasLastDailyRewards
+    ? lastDailyRewards?.totalStakedSupply * marketPrice
+    : 0;
+  const estimatedTotalSupplyWithRIP003 = hasLastDailyRewards
+    ? lastDailyRewards?.estimatedTotalStakedSupply
+    : 0;
+  const estimatedMarketCapWithRIP003 = hasLastDailyRewards
+    ? lastDailyRewards?.estimatedTotalStakedSupply * marketPrice
+    : 0;
 
   return (
     <div className="p-4 bg-gray-100 mt-6">
@@ -63,6 +76,22 @@ function CalculatorResults({
             </p>
           </div>
           <div className="items-center flex font-medium justify-between tracking-2%">
+            <p>{i18n.t("estimatedTotalSupply")}</p>
+            <p className="text-right text-rose-600">
+              {isNaN(estimatedTotalSupply)
+                ? 0
+                : formatNumber(trim(estimatedTotalSupply, 5))}{" "}
+              sROME
+            </p>
+          </div>
+          <div className="items-center flex font-medium justify-between tracking-2%">
+            <p>{i18n.t("estimatedMarketCap")}</p>
+            <p className="text-right text-rose-600">
+              {isNaN(estimatedMarketCap) ? 0 : formatToUSD(estimatedMarketCap)}{" "}
+              sROME
+            </p>
+          </div>
+          <div className="items-center flex font-medium justify-between tracking-2%">
             <p>{i18n.t("totalInvestmentValue")}</p>
             <p className="text-right text-rose-600">{totalInvestmentValue}</p>
           </div>
@@ -85,6 +114,24 @@ function CalculatorResults({
             <p>{i18n.t("estimatedTotalSRomeValueWithRIP003")}</p>
             <p className="text-right text-rose-600">
               {formatToUSD(estimatedTotalSRomeValueRIP003)}
+            </p>
+          </div>
+          <div className="items-center flex font-medium justify-between tracking-2%">
+            <p>{i18n.t("estimatedTotalSupplyWithRIP003")}</p>
+            <p className="text-right text-rose-600">
+              {isNaN(estimatedTotalSupplyWithRIP003)
+                ? 0
+                : formatNumber(trim(estimatedTotalSupplyWithRIP003, 5))}{" "}
+              sROME
+            </p>
+          </div>
+          <div className="items-center flex font-medium justify-between tracking-2%">
+            <p>{i18n.t("estimatedMarketCapWithRIP003")}</p>
+            <p className="text-right text-rose-600">
+              {isNaN(estimatedMarketCapWithRIP003)
+                ? 0
+                : formatToUSD(estimatedMarketCapWithRIP003)}{" "}
+              sROME
             </p>
           </div>
         </div>

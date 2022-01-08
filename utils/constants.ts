@@ -5,6 +5,7 @@ export const addresses: { [key: string]: string } = {
   sRome: "0x6f7D019502e17F1ef24AC67a260c65Dd23b759f1",
   sRome2: "0x89f52002e544585b42f8c7cf557609ca4c8ce12a",
   staking: "0x6f7D019502e17F1ef24AC67a260c65Dd23b759f1",
+  treasury: "0xfbAD41e4Dd040BC80c89FcC6E90d152A746139aF",
 };
 
 export const tokens: { [key: string]: string } = {
