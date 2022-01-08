@@ -33,6 +33,9 @@ function CalculatorDailyBreakdown({
               <th className="px-6 py-4">
                 {i18n.t("estimatedTotalStakedSupplyWithRIP003")}
               </th>
+              <th className="px-6 py-4">
+                {i18n.t("estimatedMarketCapWithRIP003")}
+              </th>
               <th className="px-6 py-4">{i18n.t("estimatedAPY")}</th>
               <th className="px-6 py-4">{i18n.t("estimatedStakingRebase")}</th>
               <th className="px-6 py-4">
@@ -96,6 +99,11 @@ function CalculatorDailyBreakdown({
                           trim(reward.estimatedTotalStakedSupply, 5)
                         )}{" "}
                     sROME
+                  </td>
+                  <td className="px-6 py-4 text-center text-rose-600">
+                    {isNaN(reward.estimatedMarketCapWithRIP003)
+                      ? 0
+                      : formatToUSD(reward.estimatedMarketCapWithRIP003 * 100)}
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.startingAPY)

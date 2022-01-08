@@ -107,6 +107,8 @@ export function calculateDailyRewards(
     const totalInvestmentValue = totalSRome * parseFloat(romeFuturePrice);
     const estimatedTotalSRomeValueRIP003 =
       estimatedTotalSRomeRIP003 * parseFloat(romeFuturePrice);
+    const estimatedMarketCapWithRIP003 =
+      estimatedTotalStakedSupply * parseFloat(romeFuturePrice);
 
     rewardsBreakdown.push({
       day: i + 1,
@@ -122,6 +124,7 @@ export function calculateDailyRewards(
       estimatedTotalSRomeRIP003,
       estimatedTotalSRomeValueRIP003,
       estimatedTotalStakedSupply,
+      estimatedMarketCapWithRIP003,
     });
   }
   return rewardsBreakdown;
