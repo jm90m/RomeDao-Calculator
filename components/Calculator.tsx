@@ -162,6 +162,7 @@ function Calculator() {
                 sRomeRewardValue={formattedSRomeRewardValue}
                 totalInvestmentValue={formattedTotalInvestmentValue}
                 dailyRewards={dailyRewards}
+                romeFuturePrice={romeFuturePrice}
                 key={key}
               />
             </div>

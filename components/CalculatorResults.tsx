@@ -10,6 +10,7 @@ interface CalculatorResultsProps {
   sRomeRewardValue: string;
   totalInvestmentValue: string;
   dailyRewards: any[];
+  romeFuturePrice: string;
 }
 
 function CalculatorResults({
@@ -19,6 +20,7 @@ function CalculatorResults({
   sRomeRewardValue,
   totalInvestmentValue,
   dailyRewards = [],
+  romeFuturePrice,
 }: CalculatorResultsProps) {
   const { marketPrice } = useCalculatorState();
   const lastDailyRewards =
@@ -36,13 +38,13 @@ function CalculatorResults({
     ? lastDailyRewards?.totalStakedSupply
     : 0;
   const estimatedMarketCap = hasLastDailyRewards
-    ? lastDailyRewards?.totalStakedSupply * marketPrice
+    ? lastDailyRewards?.totalStakedSupply * parseFloat(romeFuturePrice)
     : 0;
   const estimatedTotalSupplyWithRIP003 = hasLastDailyRewards
     ? lastDailyRewards?.estimatedTotalStakedSupply
     : 0;
   const estimatedMarketCapWithRIP003 = hasLastDailyRewards
-    ? lastDailyRewards?.estimatedTotalStakedSupply * marketPrice
+    ? lastDailyRewards?.estimatedTotalStakedSupply * parseFloat(romeFuturePrice)
     : 0;
 
   return (
