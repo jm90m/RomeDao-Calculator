@@ -27,11 +27,11 @@ function CalculatorDailyBreakdown({
               <th className="px-6 py-4">{i18n.t("totalInvestmentValue")}</th>
               <th className="px-6 py-4">{i18n.t("increaseStakedSupplyBy")}</th>
               <th className="px-6 py-4">
-                {i18n.t("totalStakedSupply")} @{" "}
+                {i18n.t("estimatedTotalSupply")} @{" "}
                 {formatNumber(trim(stakingAPY * 100))}% APY
               </th>
               <th className="px-6 py-4">
-                {i18n.t("estimatedTotalStakedSupplyWithRIP003")}
+                {i18n.t("estimatedTotalSupplyWithRIP003")}
               </th>
               <th className="px-6 py-4">
                 {i18n.t("estimatedMarketCapWithRIP003")}
