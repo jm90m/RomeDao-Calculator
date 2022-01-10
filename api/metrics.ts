@@ -86,7 +86,8 @@ export async function getMetrics(
       }
       case "romePurchasePrice":
       case "romeFuturePrice":
-        setValue(marketPrice.toString());
+        const marketPriceFormatted = marketPrice * Math.pow(10, -9);
+        setValue(marketPriceFormatted.toString());
         break;
     }
   }
