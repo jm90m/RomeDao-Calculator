@@ -141,8 +141,7 @@ function CalculatorResults({
           <p className="text-right text-rose-600">
             {isNaN(estimatedMarketCapWithRIP003)
               ? 0
-              : formatToUSD(estimatedMarketCapWithRIP003)}{" "}
-            sROME
+              : formatToUSD(estimatedMarketCapWithRIP003)}
           </p>
         </div>
       </div>

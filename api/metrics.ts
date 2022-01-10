@@ -7,6 +7,7 @@ import { stakingAbi } from "../abis/staking.abi";
 import { addresses } from "../utils/constants";
 import { romeFraxPair } from "../abis/romeFraxPair.abi";
 import genericAbi from "../abis/generic.abi";
+import { trim } from "../utils/utils";
 
 export async function getMarketPrice(
   provider: ethers.Signer | ethers.providers.Provider
@@ -21,7 +22,11 @@ export async function getMarketPrice(
   return marketPrice;
 }
 
-export async function getMetrics(calculatorDispatch: ContextDispatch) {
+export async function getMetrics(
+  calculatorDispatch: ContextDispatch,
+  value?: string,
+  setValue?: (value: any, value2?: any) => void
+) {
   calculatorDispatch({
     type: CALCULATOR_ACTIONS.SET_LOADING,
   });
@@ -65,6 +70,26 @@ export async function getMetrics(calculatorDispatch: ContextDispatch) {
 
   const currentIndex = await stakingContract.index();
   const nextRebase = epoch.endBlock;
+
+  if (value !== undefined) {
+    switch (value) {
+      case "apy": {
+        const trimmedStakingAPY = trim(stakingAPY * 100, 1);
+        const stakingRebasePercentage = trim(stakingRebase * 100, 4);
+        setValue(trimmedStakingAPY, stakingRebasePercentage);
+        break;
+      }
+      case "rebaseReward": {
+        const stakingRebasePercentage = trim(stakingRebase * 100, 4);
+        setValue(stakingRebasePercentage);
+        break;
+      }
+      case "romePurchasePrice":
+      case "romeFuturePrice":
+        setValue(marketPrice.toString());
+        break;
+    }
+  }
 
   calculatorDispatch({
     type: CALCULATOR_ACTIONS.SET_METRICS,

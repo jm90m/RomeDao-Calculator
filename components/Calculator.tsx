@@ -103,7 +103,15 @@ function Calculator() {
                   value={apy}
                   getCurrent={() => {
                     if (!loading) {
-                      getMetrics(calculatorDispatch);
+                      getMetrics(
+                        calculatorDispatch,
+                        "apy",
+                        (apy: string, stakingRebasePercentage: string) => {
+                          setApy(apy);
+                          setStakingRebaseReward(stakingRebasePercentage);
+                          setKey(key + 2);
+                        }
+                      );
                     }
                     const trimmedStakingAPY = trim(stakingAPY * 100, 1);
                     setApy(trimmedStakingAPY);
@@ -118,7 +126,14 @@ function Calculator() {
                   value={stakingRebaseReward}
                   getCurrent={() => {
                     if (!loading) {
-                      getMetrics(calculatorDispatch);
+                      getMetrics(
+                        calculatorDispatch,
+                        "rebaseReward",
+                        (stakingRebaseReward: string) => {
+                          setStakingRebaseReward(stakingRebaseReward);
+                          setKey(key + 2);
+                        }
+                      );
                     }
                     setStakingRebaseReward(stakingRebasePercentage);
                     setKey(key + 1);
@@ -131,7 +146,14 @@ function Calculator() {
                   value={romePurchasePrice}
                   getCurrent={() => {
                     if (!loading) {
-                      getMetrics(calculatorDispatch);
+                      getMetrics(
+                        calculatorDispatch,
+                        "romePurchasePrice",
+                        (romePurchasePrice: string) => {
+                          setRomePurchasePrice(romePurchasePrice);
+                          setKey(key + 2);
+                        }
+                      );
                     }
                     setRomePurchasePrice(marketPrice.toString());
                     setKey(key + 1);
@@ -144,7 +166,14 @@ function Calculator() {
                   value={romeFuturePrice}
                   getCurrent={() => {
                     if (!loading) {
-                      getMetrics(calculatorDispatch);
+                      getMetrics(
+                        calculatorDispatch,
+                        "romeFuturePrice",
+                        (romeFuturePrice: string) => {
+                          setRomeFuturePrice(romeFuturePrice);
+                          setKey(key + 2);
+                        }
+                      );
                     }
                     setRomeFuturePrice(marketPrice.toString());
                   }}
