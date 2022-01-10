@@ -103,7 +103,7 @@ function CalculatorDailyBreakdown({
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.estimatedMarketCapWithRIP003)
                       ? 0
-                      : formatToUSD(reward.estimatedMarketCapWithRIP003 * 100)}
+                      : formatToUSD(reward.estimatedMarketCapWithRIP003)}
                   </td>
                   <td className="px-6 py-4 text-center text-rose-600">
                     {isNaN(reward.startingAPY)

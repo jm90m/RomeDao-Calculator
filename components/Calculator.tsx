@@ -20,7 +20,7 @@ function Calculator() {
     marketPrice,
     epoch,
     loading,
-    stakedSupply,
+    totalSupply,
   } = useCalculatorState();
   const [sRomeAmount, setSRomeAmount] = useState<string>("");
   const [stakingRebaseReward, setStakingRebaseReward] = useState<string>("");
@@ -59,7 +59,7 @@ function Calculator() {
     dailyRebaseAmounts,
     stakingRebaseReward,
     romeFuturePrice,
-    stakedSupply,
+    totalSupply,
     isNaN(calculatedAPY) ? `${stakingAPY}` : `${calculatedAPY}`
   );
 
