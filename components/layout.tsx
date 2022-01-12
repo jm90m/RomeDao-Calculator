@@ -31,7 +31,10 @@ export default function Layout({
         />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="HandheldFriendly" content="true" />
-
+        <meta
+          name="google-site-verification"
+          content="ZwbBz2moXUrNrstO8WbpA4uIjvGREu0ccb40ht5hPYE"
+        />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script
           async
