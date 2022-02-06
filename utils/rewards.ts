@@ -31,20 +31,26 @@ export function calculateDailyRewards(
         Math.pow(startingAPY, 1 / (365 * dailyRebaseAmounts)) - 1 - 0.000151;
 
       if (currentEra === ERAS.REPUBLICAN) {
-        startingAPY =
+        const stakedAPY = parseFloat(stakingAPY);
+        const apy =
           SUPPLY_LIMITS.REPUBLICAN.MAX -
           (estimatedTotalStakedSupply / SUPPLY_LIMITS.REPUBLICAN.MAX_SUPPLY) *
             (SUPPLY_LIMITS.REPUBLICAN.MAX - SUPPLY_LIMITS.REPUBLICAN.MIN);
+        startingAPY = stakedAPY > apy ? apy : stakedAPY;
       } else if (currentEra === ERAS.REGAL) {
-        startingAPY =
+        const stakedAPY = parseFloat(stakingAPY);
+        const apy =
           SUPPLY_LIMITS.REGAL.MAX -
           (estimatedTotalStakedSupply / SUPPLY_LIMITS.REGAL.MAX_SUPPLY) *
             (SUPPLY_LIMITS.REGAL.MAX - SUPPLY_LIMITS.REGAL.MIN);
+        startingAPY = stakedAPY > apy ? apy : stakedAPY;
       } else if (currentEra === ERAS.IMPERIAL) {
-        startingAPY =
-          SUPPLY_LIMITS.IMPERIAL.MAX -
-          (estimatedTotalStakedSupply / SUPPLY_LIMITS.IMPERIAL.MAX_SUPPLY) *
+        const stakedAPY = parseFloat(stakingAPY);
+        const apy =
+            SUPPLY_LIMITS.IMPERIAL.MAX -
+            (estimatedTotalStakedSupply / SUPPLY_LIMITS.IMPERIAL.MAX_SUPPLY) *
             (SUPPLY_LIMITS.IMPERIAL.MAX - SUPPLY_LIMITS.IMPERIAL.MIN);
+        startingAPY = stakedAPY > apy ? apy : stakedAPY;
       }
 
       regalDecreaseAPY = prevEstimatedAPY - startingAPY;
