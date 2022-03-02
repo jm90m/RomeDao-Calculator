@@ -30,7 +30,7 @@ export async function getMetrics(
   calculatorDispatch({
     type: CALCULATOR_ACTIONS.SET_LOADING,
   });
-  const providerURL = "https://rpc.moonriver.moonbeam.network";
+  const providerURL = "https://rpc.api.moonriver.moonbeam.network";
   const provider = new ethers.providers.StaticJsonRpcProvider(providerURL, {
     chainId: 1285,
     name: "moonriver",
